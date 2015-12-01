@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "Chrome Screen capture",
+  "description": "",
+  "version": "1.0",
+
+  "browser_action": {
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "background"
+  ],
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "web_accessible_resources": [
+    "index.html",
+    "bundle.js",
+    "execute.js"
+  ]
+}
