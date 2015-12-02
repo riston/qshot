@@ -1,4 +1,5 @@
 
+import R            from "ramda";
 import JSZip        from "jszip";
 import Chrome       from "../../Chrome";
 import { saveAs }   from "../../FileSaver";
@@ -37,26 +38,28 @@ export function zip(images) {
 
     const archive = new JSZip();
 
+    // Remove the header data:[<MIME-type>][;charset=<encoding>][;base64],<data>
+    const getBase = R.pipe(
+        R.split(","),
+        R.last
+    );
+
+    // Add readme file
+    archive.file("readme.txt", "Created with QuickShot");
     images.forEach(image => {
-        archive.file(`${image.id}.png`, image.url, { base64: true });
+        const name = `${image.id}.png`;
+        const options = { base64: true };
+
+        archive.file(name, getBase(image.url), options);
     });
 
-    var saveData = (function () {
-        var a = document.createElement("a");
-        return function (data, fileName) {
-            var json = JSON.stringify(data),
-                blob = new Blob([json], {type: "octet/stream"}),
-                url = window.URL.createObjectURL(blob);
-            a.href = url;
-            a.download = fileName;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        };
-    }());
-
     return dispatch => {
-        var blob = archive.generate({ type: "blob" });
-        saveData(blob, "hello.zip");
+        const blob = archive.generate({ type: "blob" });
+        const name = `quickshot-${Date.now()}.zip`;
+
+        // Trigger the browser save
+        saveAs(blob, name);
+
         dispatch({ type: Actions.ZIP, images });
     };
 };
@@ -98,19 +101,12 @@ export function download(imgID, uri) {
 
 export function capture(selection) {
 
-    console.log("Received capture");
-
     const message = {
         action: "capture",
         selection
     };
 
     return dispatch => {
-
-        // Hide the UI
-        dispatch(hide());
-
-        console.log("Send random data");
 
         setTimeout(() => {
 
@@ -121,8 +117,6 @@ export function capture(selection) {
                 });
             });
         }, 100);
-
-        setTimeout(() => dispatch(visible()), 200);
     };
 };
 

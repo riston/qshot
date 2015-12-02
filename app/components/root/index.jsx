@@ -100,10 +100,7 @@ export default class Root extends Component {
 
         this.setState({ start: null });
 
-        // Capture event
-        dispatch(Application.hideSelection());
-        dispatch(Application.capture(selection));
-        dispatch(Application.showSidebar());
+        this._capture(selection, dispatch);
     }
 
     _mouseDown(ev) {
@@ -114,7 +111,6 @@ export default class Root extends Component {
         }
 
         const { dispatch } = this.props;
-        console.log("Click done", this._getXY(ev));
 
         this.setState({ start: this._getXY(ev) });
 
@@ -128,6 +124,20 @@ export default class Root extends Component {
     _mouseMove(selection) {
 
         this.setState({ selection });
+    }
+
+    _capture(selection, dispatch) {
+
+        // Hide the UI
+        dispatch(Application.hide());
+        dispatch(Application.hideSelection());
+
+        // Capture event
+        dispatch(Application.capture(selection));
+        dispatch(Application.showSidebar());
+
+        // Show UI again
+        setTimeout(() => dispatch(Application.visible()), 200);
     }
 
     _eventToObject(ev) {
@@ -161,12 +171,7 @@ export default class Root extends Component {
     }
 
     _isSidebar(ev) {
-        console.log("Is action", ev);
-        // return ev.target
-        //     && ev.target.dataset
-        //     && ev.target.dataset.action;
         const isOnSidebar = this._checkParentByClass(ev, "sidebar");
-        console.log("Check parent", isOnSidebar);
         return isOnSidebar;
     }
 
