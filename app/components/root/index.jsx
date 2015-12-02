@@ -1,10 +1,11 @@
 
 import "./reset.css";
 
-import Radium             from "radium";
-import Rx, { Observable } from "rx";
-import React, {Component} from "react";
-import { connect }        from "react-redux";
+import R                   from "ramda";
+import Radium              from "radium";
+import Rx, { Observable }  from "rx";
+import React, {Component } from "react";
+import { connect }         from "react-redux";
 
 import * as Application from "actions/app";
 import Sidebar          from "sidebar";
@@ -75,13 +76,18 @@ export default class Root extends Component {
 	}
 
     _onClose() {
-        const { dispatch }  = this.props;
+        const { dispatch } = this.props;
 
         dispatch(Application.close());
     }
 
     _onDownloadAll() {
-        console.log("Download all images");
+        const { dispatch, images } = this.props;
+
+        const keys = R.keys(images);
+        const asArray = R.map(ID => R.assoc("id", ID, images[ID]), keys);
+
+        dispatch(Application.zip(asArray));
     }
 
     _mouseUp(ev) {

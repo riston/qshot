@@ -29,9 +29,6 @@ export default function (state = {}, action) {
         // Remove image
         delete obj.images[action.id];
 
-        // const removed = state.images.without(action.id)
-        console.log("Removed", obj);
-
         return Immutable(obj);
 
     case Actions.CONVERT:

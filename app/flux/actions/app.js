@@ -1,10 +1,10 @@
 
-import Chrome from "../../Chrome";
-import * as Actions from "constants/actions"
+import JSZip        from "jszip";
+import Chrome       from "../../Chrome";
+import { saveAs }   from "../../FileSaver";
+import * as Actions from "constants/actions";
 
 export function hide() {
-
-    console.log("Hide the UI");
 
     return { type: Actions.HIDE };
 };
@@ -33,6 +33,34 @@ export function remove(imgID) {
     return { type: Actions.REMOVE, id: imgID };
 };
 
+export function zip(images) {
+
+    const archive = new JSZip();
+
+    images.forEach(image => {
+        archive.file(`${image.id}.png`, image.url, { base64: true });
+    });
+
+    var saveData = (function () {
+        var a = document.createElement("a");
+        return function (data, fileName) {
+            var json = JSON.stringify(data),
+                blob = new Blob([json], {type: "octet/stream"}),
+                url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        };
+    }());
+
+    return dispatch => {
+        var blob = archive.generate({ type: "blob" });
+        saveData(blob, "hello.zip");
+        dispatch({ type: Actions.ZIP, images });
+    };
+};
+
 export function close() {
 
     const mainEl = "qs-screenshot-extension";
@@ -47,8 +75,8 @@ export function close() {
 
 export function download(imgID, uri) {
 
-    const fileName = ["shot-", imgID, ".png"].join("");
     const link = document.createElement("a");
+    const fileName = `shot-${imgID}.png`;
     const WAIT_TIME = 30;
 
     link.download = fileName;

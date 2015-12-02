@@ -3,6 +3,7 @@ export const TEST = "TEST";
 export const TEST_ASYNC = "TEST_ASYNC";
 
 export const CLOSE = "CLOSE";
+export const ZIP = "ZIP";
 
 export const HIDE_SIDEBAR = "HIDE_SIDEBAR";
 export const SHOW_SIDEBAR = "SHOW_SIDEBAR";
