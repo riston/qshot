@@ -1,32 +1,31 @@
-var path = require("path")
+
+var path              = require("path")
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-var webpack = require('webpack');
-var output = path.join(__dirname, '../build');
+var output            = path.join(__dirname, "../build");
 
 module.exports = {
-    context: path.resolve(__dirname, '..'),
+    context: path.resolve(__dirname, ".."),
     resolve: {
         modulesDirectories: ["node_modules", "components", "flux"],
-        extensions : ["", ".js", ".jsx"]
+        extensions: ["", ".js", ".jsx"]
     },
     entry: [
-        './app/main.js'
+        "./app/main.js"
     ],
     output: {
         path: output,
-        filename: 'bundle.js',
+        filename: "bundle.js",
     },
-    plugins: [],
     progress: true,
     module: {
         loaders: [{
             test: /\.js.*$/,
-            loader: 'babel?optional[]=runtime&stage=0',
+            loader: "babel?optional[]=runtime&stage=0",
             exclude: /node_modules/
         }, {
             test: /\.png.*$/,
-            loaders: ['url-loader?limit=100000&mimetype=image/png'],
+            loaders: ["url-loader?limit=100000&mimetype=image/png"],
             exclude: /node_modules/
         }, {
             test: /\.css$/,
@@ -35,15 +34,15 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '../index.html'),
-            inject : 'body',
-            hash : true,
+            template: path.resolve(__dirname, "../index.html"),
+            inject: "body",
+            hash: true,
         }),
         new ExtractTextPlugin("bundle.css"),
     ],
     cssnext: {
         import: {
-            path: ['']
+            path: [""]
         },
         features: {
         }
