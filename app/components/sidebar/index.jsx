@@ -1,7 +1,11 @@
 
 import Radium from "radium";
 import React, { Component, PropTypes } from "react";
-import ImageList from "image-list";
+
+import ImageList     from "image-list";
+import ScrollWrapper from "scroll-wrapper";
+// import ReactIscroll  from "react-iscroll";
+import iscroll       from "iscroll";
 
 @Radium
 export default class Sidebar extends Component {
@@ -19,6 +23,11 @@ export default class Sidebar extends Component {
     render() {
         const { isVisible } = this.props;
 
+        const scrollOptions = {
+            mouseWheel: true,
+            scrollbars: true,
+        };
+
         return (
             <div className="sidebar"
                 style={[styles.base, isVisible ? styles.isVisible : styles.isHidden]}
@@ -28,9 +37,12 @@ export default class Sidebar extends Component {
                     <button style={styles.button} data-action="download-all">Download All</button>
                     <button style={styles.button} data-action="close">Close</button>
                 </div>
-                <div>
-                    <ImageList images={this.props.images} />
+                <div style={styles.body}>
+                    <ScrollWrapper>
+                        <ImageList images={this.props.images} />
+                    </ScrollWrapper>
                 </div>
+                <div style={styles.footer}>Footer</div>
             </div>
         )
     }
@@ -55,12 +67,18 @@ const styles = {
         top: "0px",
         right: "0px",
         width: "150px",
-        height: "100%",
+        height: "100vh",
         backgroundColor: "rgb(0, 100, 148)",
+        display: "flex",
+        flexDirection: "column",
     },
 
     header: {
         padding: "0.5em",
+    },
+
+    footer: {
+        backgroundColor: "#ddd",
     },
 
     h2: {
@@ -85,11 +103,19 @@ const styles = {
         marginBottom: "0.5em",
     },
 
+    body: {
+        // position: "relative",
+        flexGrow: 1,
+        height: "100%",
+        overflow: "hidden",
+        position: "relative",
+    },
+
     isHidden: {
         display: "none",
     },
 
     isVisible: {
-        display: "block",
+        display: "flex",
     }
 };

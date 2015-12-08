@@ -18,10 +18,7 @@ export default class ScrollWrapper extends Component {
             fadeScrollbars: true,
         });
 
-        setTimeout(() => {
-
-            this.scroll.refresh()
-        }, 300)
+        setTimeout(() => this.scroll.refresh(), 300)
     }
 
     componentWillUnmount() {
@@ -31,17 +28,15 @@ export default class ScrollWrapper extends Component {
 
     render() {
         const { children } = this.props;
-
         const styles = {
-            height: this.props.height || "80vh",
-            overflow: "hidden",
             position: "absolute",
+            height:   "100%",
+            width:    "100%",
+            overflow: "hidden",
         };
 
         return (
-            <div className="scroll-wrapper" style={styles}>
-                {children}
-            </div>
+            <div style={styles}>{children}</div>
         )
     }
 

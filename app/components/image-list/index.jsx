@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 import * as Application from "actions/app";
 import Image from "image";
-import ScrollWrapper from "scroll-wrapper";
 
 @connect(state => {
     return state.app;
@@ -23,7 +22,6 @@ export default class ImageList extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // debugger;
         this.refs.scroll.refresh();
     }
 
@@ -38,11 +36,9 @@ export default class ImageList extends Component {
         const noImages = <p>No images</p>;
 
         return (
-            <ScrollWrapper ref="scroll">
-                <div style={styles.list} onClick={e => this._onClick(e)}>
-                    {IDs.length <= 0 ? noImages : renderImages}
-                </div>
-            </ScrollWrapper>
+            <div style={styles.list} onClick={e => this._onClick(e)}>
+                {IDs.length <= 0 ? noImages : renderImages}
+            </div>
         )
     }
 
@@ -74,7 +70,5 @@ export default class ImageList extends Component {
 const styles = {
 
     list: {
-        overflow: "auto",
-        padding: "0.5em",
     }
 };

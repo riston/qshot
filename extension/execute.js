@@ -10,7 +10,7 @@ iframe.style.top      = "0";
 iframe.style.right    = "0";
 iframe.style.height   = "100%";
 iframe.style.width    = "100%";
-iframe.style.zIndex   = 99999999;
+iframe.style.zIndex   = 2147483647;
 
 var elName = "qs-screenshot-extension";
 var refEl = document.getElementById(elName);
