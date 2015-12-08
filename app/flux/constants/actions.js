@@ -17,4 +17,5 @@ export const REMOVE = "REMOVE";
 export const HIDE = "HIDE";
 export const VISIBLE = "VISIBLE";
 export const CAPTURE = "CAPTURE";
+export const SCREEN_CAPTURE = "SCREEN_CAPTURE";
 export const CONVERT = "CONVERT";

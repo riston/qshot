@@ -5,7 +5,8 @@ import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 
 import * as Application from "actions/app";
-import Image from "image";
+import Image            from "image";
+import ScrollWrapper    from "scroll-wrapper";
 
 @connect(state => {
     return state.app;
@@ -21,7 +22,7 @@ export default class ImageList extends Component {
         super(props)
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         this.refs.scroll.refresh();
     }
 
@@ -36,9 +37,11 @@ export default class ImageList extends Component {
         const noImages = <p>No images</p>;
 
         return (
-            <div style={styles.list} onClick={e => this._onClick(e)}>
-                {IDs.length <= 0 ? noImages : renderImages}
-            </div>
+            <ScrollWrapper ref="scroll">
+                <div style={styles.list} onClick={e => this._onClick(e)}>
+                    {IDs.length <= 0 ? noImages : renderImages}
+                </div>
+            </ScrollWrapper>
         )
     }
 

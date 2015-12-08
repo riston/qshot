@@ -69,6 +69,7 @@ export default class Root extends Component {
                 </div>
                 <Sidebar images={images}
                     isVisible={isSidebarVisible}
+                    onScreenCaptureFn={this._onScreenCapture.bind(this)}
                     onCloseFn={this._onClose.bind(this)}
                     onDownloadAllFn={this._onDownloadAll.bind(this)} />
 			</section>
@@ -88,6 +89,22 @@ export default class Root extends Component {
         const asArray = R.map(ID => R.assoc("id", ID, images[ID]), keys);
 
         dispatch(Application.zip(asArray));
+    }
+
+    _onScreenCapture() {
+        console.log("Called screen capture");
+
+        const { dispatch } = this.props;
+
+        // Instead of user selection, use whole screen
+        const selection = {
+            x: 0,
+            y: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+
+        this._capture(selection, dispatch);
     }
 
     _mouseUp(ev) {

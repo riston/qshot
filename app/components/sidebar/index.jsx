@@ -3,17 +3,15 @@ import Radium from "radium";
 import React, { Component, PropTypes } from "react";
 
 import ImageList     from "image-list";
-import ScrollWrapper from "scroll-wrapper";
-// import ReactIscroll  from "react-iscroll";
-import iscroll       from "iscroll";
 
 @Radium
 export default class Sidebar extends Component {
 
     static propTypes = {
-        isVisible:       PropTypes.bool,
-        onCloseFn:       PropTypes.func.isRequired,
-        onDownloadAllFn: PropTypes.func.isRequired,
+        isVisible:         PropTypes.bool,
+        onCloseFn:         PropTypes.func.isRequired,
+        onDownloadAllFn:   PropTypes.func.isRequired,
+        onScreenCaptureFn: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
@@ -34,28 +32,33 @@ export default class Sidebar extends Component {
             >
                 <div style={styles.header} onClick={e => this._onClick(e)}>
                     <h2 style={styles.h2}>QuickShot</h2>
+                    <button style={styles.button} data-action="screen-capture">Screen capture</button>
                     <button style={styles.button} data-action="download-all">Download All</button>
                     <button style={styles.button} data-action="close">Close</button>
                 </div>
                 <div style={styles.body}>
-                    <ScrollWrapper>
-                        <ImageList images={this.props.images} />
-                    </ScrollWrapper>
+                    <ImageList images={this.props.images} />
                 </div>
-                <div style={styles.footer}>Footer</div>
+                <div style={styles.footer}>&copy; 2015</div>
             </div>
         )
     }
 
     _onClick(e) {
         const { action } = e.target.dataset;
-        const { onCloseFn, onDownloadAllFn } = this.props;
+        const {
+            onCloseFn, onDownloadAllFn, onScreenCaptureFn,
+        } = this.props;
 
-        if ("download-all" === action) {
-            onDownloadAllFn();
-        }
-        else if ("close" === action) {
-            onCloseFn();
+        switch (action) {
+        case "download-all":
+            return onDownloadAllFn();
+
+        case "close":
+            return onCloseFn();
+
+        case "screen-capture":
+            return onScreenCaptureFn();
         }
     }
 }
@@ -78,7 +81,12 @@ const styles = {
     },
 
     footer: {
-        backgroundColor: "#ddd",
+        backgroundColor: "rgb(0, 100, 148)",
+        padding: "0.5em",
+        color: "#E8F1F2",
+        fontSize: "0.9em",
+        textAlign: "center",
+        fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
     },
 
     h2: {
