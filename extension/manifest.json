@@ -23,6 +23,7 @@
   "web_accessible_resources": [
     "index.html",
     "bundle.js",
-    "execute.js"
+    "execute.js",
+    "execute-close.js"
   ]
 }

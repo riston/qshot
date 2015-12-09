@@ -1,32 +1,41 @@
 
 console.log("Background script started");
-
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-
-    var options = {
-        format: "png",
-        quality: 75,
-    };
 
     console.log("Received message from", message, sender);
 
-    // Capture API https://developer.chrome.com/extensions/tabs#method-captureVisibleTab
-    chrome.tabs.captureVisibleTab(null, options, function (dataUrl) {
+    if (!message.action) {
+        return;
+    }
 
-        console.log("Image", dataUrl);
+    if (message.action === "capture") {
 
-        var newMessage = {
-            selection: message.selection,
-            url: dataUrl,
+        var options = {
+            format: "png",
+            quality: 75,
         };
 
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-          chrome.tabs.sendMessage(tabs[0].id, newMessage, function (response) {
-            console.log(response);
-          });
-        });
+        // Capture API https://developer.chrome.com/extensions/tabs#method-captureVisibleTab
+        chrome.tabs.captureVisibleTab(null, options, function (dataUrl) {
 
-    });
+            console.log("Image", dataUrl);
+
+            var newMessage = {
+                selection: message.selection,
+                url: dataUrl,
+            };
+
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, newMessage, function (response) {
+                console.log(response);
+              });
+            });
+
+        });
+    } else if (message.action === "close-app") {
+        chrome.tabs.executeScript(null, { file: "execute-close.js" });
+    }
+
 });
 
 // Inject the scripts to page

@@ -66,14 +66,17 @@ export function zip(images) {
 
 export function close() {
 
-    const mainEl = "qs-screenshot-extension";
+    const message = {
+        action: "close-app",
+    };
 
-    const node = document.getElementById(mainEl);
-    if (node.parentNode) {
-        node.parentNode.removeChild(node);
-
-        return { type: Actions.CLOSE };
-    }
+    return dispatch => {
+        Chrome.sendMessage(message, (err, response) => {
+            dispatch({
+                type: Actions.CLOSE,
+            });
+        });
+    };
 };
 
 export function download(imgID, uri) {

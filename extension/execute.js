@@ -12,7 +12,7 @@ iframe.style.height   = "100%";
 iframe.style.width    = "100%";
 iframe.style.zIndex   = 2147483647;
 
-var elName = "qs-screenshot-extension";
+var elName = "qs-screenshot-extension-frame";
 var refEl = document.getElementById(elName);
 
 iframe.src = chrome.runtime.getURL("index.html");
