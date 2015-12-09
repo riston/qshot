@@ -73,5 +73,6 @@ export default class ImageList extends Component {
 const styles = {
 
     list: {
+        paddingTop: "0.5em",
     }
 };

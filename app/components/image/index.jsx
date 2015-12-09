@@ -10,24 +10,10 @@ export default class Image extends Component {
 
     state = {
         showActions: false,
-        progress: 10
     }
 
     constructor(props) {
         super(props);
-
-        this.updateRef = setInterval(() => {
-            const current = this.state.progress;
-
-            this.setState({
-                progress: current > 100 ? 0 : current + 10,
-            });
-        }, Math.random() * 1000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.updateRef);
-        this.updateRef = null;
     }
 
     render() {
@@ -42,29 +28,39 @@ export default class Image extends Component {
                 <img style={styles.img} src={url} />
                 <div style={[styles.layer, hideLayer && styles.isHidden]}>
                     {this.renderActionButtons(id)}
+                    <button data-id={id} data-action="delete" style={styles.quickAction}>
+                        ✖
+                    </button>
                 </div>
-                <Progressbar progress={progress} />
             </div>
         )
     }
 
     renderActionButtons(id) {
+        const buttons = [
+            {
+                action: "upload",
+                text: "Upload",
+                style: [styles.actionsButton, styles.uploadBtn],
+            },
+            {
+                action: "download",
+                text: "Download",
+                style: [styles.actionsButton, styles.downloadBtn],
+            },
+        ];
 
-        const downloadStyles = [styles.actionsButton, styles.downloadBtn];
-        const uploadStyles = [styles.actionsButton, styles.uploadBtn];
-        const deleteStyles = [styles.actionsButton, styles.deleteBtn];
+        const renderButtons = buttons.map((button, idx) => {
+            return (
+                <button key={idx} data-id={id} data-action={button.action} style={button.style}>
+                    {button.text}
+                </button>
+            );
+        });
 
         return (
             <div style={styles.actions}>
-                <button key="delete" data-id={id} data-action="delete" style={deleteStyles}>
-                    Delete
-                </button>
-                <button key="upload" data-id={id} data-action="upload" style={uploadStyles}>
-                    Upload
-                </button>
-                <button key="download" data-id={id} data-action="download" style={downloadStyles}>
-                    Download
-                </button>
+                {renderButtons}
             </div>
         );
     }
@@ -114,6 +110,23 @@ const styles = {
     actions: {
         display: "flex",
         flexDirection: "column",
+    },
+
+    quickAction: {
+        position: "absolute",
+        top: "-0.5em",
+        left: "-0.5em",
+        backgroundColor: "#AF0A0A",
+        borderRadius: "50%",
+        padding: "0.4em",
+        color: "#FFF",
+        cursor: "pointer",
+        border: "none",
+        outline: "none",
+
+        ":hover": {
+            backgroundColor: "#F00",
+        }
     },
 
     actionsButton: {
