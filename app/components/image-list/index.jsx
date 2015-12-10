@@ -1,8 +1,9 @@
 
-import R from "ramda";
-import Radium from "radium";
+import R                               from "ramda";
+import Radium                          from "radium";
 import React, { Component, PropTypes } from "react";
-import { connect } from "react-redux";
+import CSSTransitionGroup              from "react-addons-css-transition-group";
+import { connect }                     from "react-redux";
 
 import * as Application from "actions/app";
 import Image            from "image";
@@ -22,7 +23,7 @@ export default class ImageList extends Component {
         super(props)
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         this.refs.scroll.refresh();
     }
 
@@ -34,38 +35,47 @@ export default class ImageList extends Component {
             return <Image key={ID} id={ID} {...images[ID]} />
         });
 
-        const noImages = <p>No images</p>;
-
         return (
-            <ScrollWrapper ref="scroll">
-                <div style={styles.list} onClick={e => this._onClick(e)}>
-                    {IDs.length <= 0 ? noImages : renderImages}
-                </div>
-            </ScrollWrapper>
+                <ScrollWrapper ref="scroll">
+                    <div style={styles.list} onClick={e => this._onClick(e)}>
+                        <CSSTransitionGroup transitionName="image" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                        {IDs.length <= 0 ? this.renderNoImages() : renderImages}
+                        </CSSTransitionGroup>
+                    </div>
+                </ScrollWrapper>
         )
+    }
+
+    renderNoImages() {
+        return (
+            <div style={styles.noImages}>
+                No images, but you could take some
+            </div>
+        );
     }
 
     _onClick(ev) {
         const { dispatch } = this.props;
         const { id, action } = ev.target.dataset;
 
-        if ("download" === action) {
-
+        switch (action) {
+        case "download":
             const { url } = this.props.images[id];
 
             console.log("Download image", id, action);
 
             dispatch(Application.download(id, url));
-        }
-        else if ("upload" === action) {
+        break
 
+        case "upload":
             console.log("Upload image where to ?");
-        }
-        else if ("delete" === action) {
+        break;
 
+        case "delete":
             console.log("Delete image");
 
             dispatch(Application.remove(id));
+        break;
         }
     }
 }
@@ -74,5 +84,13 @@ const styles = {
 
     list: {
         paddingTop: "0.5em",
+    },
+
+    noImages: {
+        textAlign: "center",
+        color: "#FFF",
+        paddingBottom: "0.5em",
+        fontWeight: "900",
+        fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
     }
 };

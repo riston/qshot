@@ -19,7 +19,7 @@ Chrome.onMessage(request => {
     const { selection, url } = request;
 
     if (!selection || !url) {
-        console.log("Not received correct attributes");
+        console.log("Did not receive correct attributes");
         return;
     }
 

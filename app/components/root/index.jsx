@@ -1,5 +1,6 @@
 
 import "./reset.css";
+import "./style.css";
 
 import R                   from "ramda";
 import Radium              from "radium";
@@ -214,10 +215,10 @@ export default class Root extends Component {
     }
 
     _getXY(ev) {
-      return [
+        return [
           ev.pageX - document.body.scrollLeft,
           ev.pageY - document.body.scrollTop
-      ];
+        ];
     };
 }
 
