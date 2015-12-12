@@ -1,9 +1,19 @@
 
 "use strict";
 
-let gulp = require("gulp");
-let gutil = require("gulp-util");
-let webpack = require("webpack");
+const gulp = require("gulp");
+const gutil = require("gulp-util");
+const webpack = require("webpack");
+const zip = require("gulp-zip");
+
+gulp.task("zip", () => {
+    const manifest = require("./extension/manifest.json");
+    const version = manifest.version;
+
+    gulp.src("build/*")
+        .pipe(zip(`qshot-${version}.zip`))
+        .pipe(gulp.dest("dist"));
+});
 
 gulp.task("copy:dev", () => {
 
