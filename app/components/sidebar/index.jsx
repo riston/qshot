@@ -21,25 +21,26 @@ export default class Sidebar extends Component {
     render() {
         const { isVisible } = this.props;
 
-        const scrollOptions = {
-            mouseWheel: true,
-            scrollbars: true,
-        };
-
         return (
             <div className="sidebar"
                 style={[styles.base, isVisible ? styles.isVisible : styles.isHidden]}
             >
                 <div style={styles.header} onClick={e => this._onClick(e)}>
-                    <h2 style={styles.h2}>QuickShot</h2>
-                    <button style={styles.button} data-action="screen-capture">Screen capture</button>
-                    <button style={styles.button} data-action="download-all">Download All</button>
-                    <button style={styles.button} data-action="close">Close</button>
+                    <h2 style={styles.h2}>QShot</h2>
+                    <button key="capture"
+                        style={styles.button}
+                        data-action="screen-capture">Screen capture</button>
+                    <button key="download-all"
+                        style={styles.button}
+                        data-action="download-all">Download All</button>
+                    <button key="close"
+                        style={styles.button}
+                        data-action="close">Close</button>
                 </div>
                 <div style={styles.body}>
                     <ImageList images={this.props.images} />
                 </div>
-                <div style={styles.footer}>&copy; 2015</div>
+                <div style={styles.footer}>Risto Novik &copy; 2015</div>
             </div>
         )
     }
@@ -96,6 +97,7 @@ const styles = {
         fontWeight: "900",
         color: "#E8F1F2",
         fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        textAlign: "center",
     },
 
     button: {
@@ -110,6 +112,10 @@ const styles = {
         backgroundColor: "#E84855",
         color: "#FFF",
         marginBottom: "0.5em",
+
+        ":hover": {
+            backgroundColor: "#E84800",
+        }
     },
 
     body: {

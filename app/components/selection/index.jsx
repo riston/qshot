@@ -2,6 +2,8 @@
 import Radium from "radium";
 import React, { Component, PropTypes} from "react";
 
+import Badge from "badge";
+
 @Radium
 export default class Selection extends Component {
 
@@ -20,12 +22,15 @@ export default class Selection extends Component {
     render() {
 
         const isVisible = !this.props.isVisible;
-        const { x, y } = this.props;
+        const { x, y, width, height } = this.props;
         const rectStyles = {
             transform: `translate3d(${x}px, ${y}px, 0)`,
-            width: this.props.width,
-            height: this.props.height,
+            width,
+            height,
         };
+        const badge = this.isBadgeVisible(width, height)
+            ? <Badge text={`${width}x${height}`} style={{color: "red"}} />
+            : null;
 
         return (
             <div style={[styles.selection, rectStyles, isVisible && styles.hide]}>
@@ -33,8 +38,16 @@ export default class Selection extends Component {
                 <div style={[styles.corner, styles.topRight]}></div>
                 <div style={[styles.corner, styles.bottomLeft]}></div>
                 <div style={[styles.corner, styles.bottomRight]}></div>
+                {badge}
             </div>
         )
+    }
+
+    isBadgeVisible(width, height) {
+        const MIN_SIZE = 64;
+
+        return width >= MIN_SIZE
+            && height >= MIN_SIZE;
     }
 }
 
@@ -42,7 +55,7 @@ const styles = {
 
     selection: {
         position: "fixed",
-        border: "1.3px dashed #006494",
+        border: "1.3px solid #006494",
     },
 
     hide: {
@@ -77,4 +90,16 @@ const styles = {
         right: "-3px",
     },
 
+    sizeBadge: {
+        position: "absolute",
+        display: "block",
+        bottom: "10px",
+        left: "50%",
+        background: "#73C1E2",
+        padding: "0.2em",
+        borderRadius: "5px",
+        color: "#FFF",
+        fontSize: "0.9em",
+        fontWeight: "900",
+    }
 };

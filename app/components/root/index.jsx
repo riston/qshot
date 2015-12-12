@@ -24,7 +24,7 @@ export default class Root extends Component {
     }
 
     componentWillMount() {
-        this.up$ = Observable.fromEvent(document, "mouseup");
+        this.up$   = Observable.fromEvent(document, "mouseup");
         this.down$ = Observable.fromEvent(document, "mousedown");
         this.move$ = Observable.fromEvent(document, "mousemove");
 
@@ -36,12 +36,10 @@ export default class Root extends Component {
           .distinctUntilChanged();
 
         this.up$
-            // .filter(this._isSidebar, this)
             .subscribe(e => this._mouseUp(e));
         this.down$
             .subscribe(e => this._mouseDown(e));
         this.path$
-            // .filter(this._isSidebar, this)
             .subscribe(e => this._mouseMove(e));
     }
 
@@ -93,8 +91,6 @@ export default class Root extends Component {
     }
 
     _onScreenCapture() {
-        console.log("Called screen capture");
-
         const { dispatch } = this.props;
 
         // Instead of user selection, use whole screen
@@ -240,7 +236,7 @@ const styles = {
         left: "0px",
         right: "0px",
         bottom: "0px",
-        // backgroundColor: "rgba(200, 200, 200, 0.3)",
+        userSelect: "none",
     },
 
     hide: {
