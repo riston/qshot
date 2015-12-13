@@ -1,7 +1,8 @@
 {
-  "name": "changeme",
-  "version": "0.0.0",
-  "description": "",
+  "name": "qshot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Quick way to capture areas in browser",
   "scripts": {
     "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --config webpack/dev.config.js",
     "dev-file": "webpack -p --colors --progress --watch --config=./webpack/dev.config.js",

@@ -1,5 +1,6 @@
 
-var path              = require("path")
+var path              = require("path");
+var webpack           = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var output            = path.join(__dirname, "../build");
@@ -33,6 +34,11 @@ module.exports = {
         }]
     },
     plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "../index.html"),
             inject: "body",
