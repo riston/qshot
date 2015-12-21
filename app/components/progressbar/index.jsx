@@ -26,13 +26,11 @@ export default class Progressbar extends Component {
         }
 
         return (
-            <div
-                style={[
-                    styles.progress,
-                    currentProgress,
-                    done && styles.isDone,
-                    !isVisible && styles.isHidden
-            ]}></div>
+            <div style={[
+                styles.progress,
+                currentProgress,
+                done && styles.isDone,
+                !isVisible && styles.isHidden]} />
         )
     }
 }

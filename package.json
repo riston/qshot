@@ -13,6 +13,7 @@
   "author": "riston",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer-loader": "^3.1.0",
     "babel-core": "^5.6.15",
     "babel-eslint": "^4.1.3",
     "babel-loader": "^5.3.1",
@@ -22,7 +23,7 @@
     "eslint": "^1.5.1",
     "eslint-plugin-babel": "^2.1.1",
     "eslint-plugin-react": "^3.5.0",
-    "extract-text-webpack-plugin": "^0.8.2",
+    "extract-text-webpack-plugin": "^0.9.1",
     "gulp": "^3.9.0",
     "gulp-util": "^3.0.7",
     "gulp-zip": "^3.0.2",

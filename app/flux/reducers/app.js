@@ -46,8 +46,18 @@ export default function (state = {}, action) {
         }, { deep: true });
 
     case Actions.CAPTURE:
-    case Actions.TEST_ASYNC:
         return state;
+
+    case Actions.PREVIEW:
+
+        const { id } = action;
+
+        return state.merge({ preview: id });
+
+    case Actions.HIDE_PREVIEW:
+
+        return state.merge({ preview: null });
     }
+
     return state
 }

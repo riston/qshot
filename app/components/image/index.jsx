@@ -39,9 +39,9 @@ export default class Image extends Component {
     renderActionButtons(id) {
         const buttons = [
             {
-                action: "upload",
-                text: "Upload",
-                style: [styles.actionsButton, styles.uploadBtn],
+                action: "preview",
+                text: "Preview",
+                style: [styles.actionsButton, styles.previewBtn],
             },
             {
                 action: "download",
@@ -149,7 +149,7 @@ const styles = {
         backgroundColor: "#AD4E4E",
     },
 
-    uploadBtn: {
+    previewBtn: {
         backgroundColor: "#2FBD4F",
     },
 

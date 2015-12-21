@@ -36,13 +36,13 @@ export default class ImageList extends Component {
         });
 
         return (
-                <ScrollWrapper ref="scroll">
-                    <div style={styles.list} onClick={e => this._onClick(e)}>
-                        <CSSTransitionGroup transitionName="image" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-                        {IDs.length <= 0 ? this.renderNoImages() : renderImages}
-                        </CSSTransitionGroup>
-                    </div>
-                </ScrollWrapper>
+            <ScrollWrapper ref="scroll">
+                <div style={styles.list} onClick={e => this._onClick(e)}>
+                    <CSSTransitionGroup transitionName="image" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                    {IDs.length <= 0 ? this.renderNoImages() : renderImages}
+                    </CSSTransitionGroup>
+                </div>
+            </ScrollWrapper>
         )
     }
 
@@ -58,6 +58,8 @@ export default class ImageList extends Component {
         const { dispatch } = this.props;
         const { id, action } = ev.target.dataset;
 
+        console.log(ev);
+
         switch (action) {
         case "download":
             const { url } = this.props.images[id];
@@ -67,8 +69,9 @@ export default class ImageList extends Component {
             dispatch(Application.download(id, url));
         break
 
-        case "upload":
-            console.log("Upload image where to ?");
+        case "preview":
+            console.log("Preview image", id);
+            dispatch(Application.preview(id));
         break;
 
         case "delete":
@@ -89,7 +92,7 @@ const styles = {
     noImages: {
         textAlign: "center",
         color: "#FFF",
-        paddingBottom: "0.5em",
+        padding: "0.1em",
         fontWeight: "900",
         fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
     }

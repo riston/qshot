@@ -20,36 +20,47 @@ const finalCreateStore = compose(
 // Initial state for the application
 const initState = Immutable({
     app: {
+
+        // Hide the main UI container
         isVisible: true,
+
+        // Show sidebar
         isSidebarVisible: true,
+
+        // Selection box visible or not
         isSelectionVisible: false,
+
+        // Preview image ID is stored here
+        preview: null,
+
+        // Images array rendered in sidebar
         images: {
             122: {
-                url: "https://placehold.it/150x150",
+                url: "http://lorempixel.com/200/300/",
                 width: 300,
                 height: 200
             },
             32: {
-                url: "https://placehold.it/150x150",
+                url: "http://lorempixel.com/100/200/",
                 width: 300,
                 height: 200
             },
             13: {
-                url: "https://placehold.it/50x50",
+                url: "http://lorempixel.com/400/500/",
                 width: 50,
                 height: 50
             },
             14: {
-                url: "https://placehold.it/150x150",
+                url: "http://lorempixel.com/700/600/",
                 width: 300,
                 height: 200
             },
             15: {
-                url: "https://placehold.it/150x150",
+                url: "http://lorempixel.com/300/200/",
                 width: 300,
                 height: 200
             },
-        }
+        },
     },
 });
 

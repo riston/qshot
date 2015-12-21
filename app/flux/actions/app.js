@@ -5,36 +5,35 @@ import Chrome       from "../../Chrome";
 import { saveAs }   from "../../FileSaver";
 import * as Actions from "constants/actions";
 
-export function hide() {
-
+export const hide = () => {
     return { type: Actions.HIDE };
 };
 
-export function visible() {
+export const visible = () => {
     return { type: Actions.VISIBLE };
 };
 
-export function hideSidebar() {
+export const hideSidebar = () => {
     return { type: Actions.HIDE_SIDEBAR };
 };
 
-export function showSidebar() {
+export const showSidebar = () => {
     return { type: Actions.SHOW_SIDEBAR };
 };
 
-export function showSelection() {
+export const showSelection = () => {
     return { type: Actions.SHOW_SELECTION };
 };
 
-export function hideSelection() {
+export const hideSelection = () => {
     return { type: Actions.HIDE_SELECTION };
 }
 
-export function remove(imgID) {
+export const remove = imgID => {
     return { type: Actions.REMOVE, id: imgID };
 };
 
-export function zip(images) {
+export const zip = images => {
 
     const archive = new JSZip();
 
@@ -64,7 +63,7 @@ export function zip(images) {
     };
 };
 
-export function close() {
+export const close = () => {
 
     const message = {
         action: "close-app",
@@ -79,7 +78,7 @@ export function close() {
     };
 };
 
-export function download(imgID, uri) {
+export const download = (imgID, uri) => {
 
     const link = document.createElement("a");
     const fileName = `shot-${imgID}.png`;
@@ -102,7 +101,7 @@ export function download(imgID, uri) {
     }
 };
 
-export function capture(selection) {
+export const capture = (selection) => {
 
     const message = {
         action: "capture",
@@ -123,7 +122,7 @@ export function capture(selection) {
     };
 };
 
-export function convert(selection, imgURL) {
+export const convert = (selection, imgURL) => {
 
     return dispatch => {
         const image = new Image();
@@ -169,7 +168,17 @@ export function convert(selection, imgURL) {
     };
 };
 
-export function testAsync(message) {
+export const preview = id => {
+
+    return { type: Actions.PREVIEW, id };
+};
+
+export const hidePreview = () => {
+
+    return { type: Actions.HIDE_PREVIEW };
+};
+
+export const testAsync = message => {
     return dispatcher => {
         setTimeout(() => {
             dispatcher({

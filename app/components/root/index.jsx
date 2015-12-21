@@ -11,6 +11,7 @@ import { connect }         from "react-redux";
 import * as Application from "actions/app";
 import Sidebar          from "sidebar";
 import Selection        from "selection";
+import ImagePreview     from "image-preview";
 
 @connect(state => {
     return state.app;
@@ -54,8 +55,9 @@ export default class Root extends Component {
 	render() {
         const {x, y, width, height} = this.state.selection;
         const {
-            isVisible, isSidebarVisible, isSelectionVisible, images
+            isVisible, isSidebarVisible, isSelectionVisible, preview, images
         } = this.props;
+        const image = R.pathOr(null, [preview], images);
 
 		return (
 			<section style={[styles.base, !isVisible && styles.hide]}>
@@ -71,6 +73,9 @@ export default class Root extends Component {
                     onScreenCaptureFn={this._onScreenCapture.bind(this)}
                     onCloseFn={this._onClose.bind(this)}
                     onDownloadAllFn={this._onDownloadAll.bind(this)} />
+                <ImagePreview
+                    {...image}
+                    onClose={this._onPreviewClose.bind(this)} />
 			</section>
 		)
 	}
@@ -79,6 +84,12 @@ export default class Root extends Component {
         const { dispatch } = this.props;
 
         dispatch(Application.close());
+    }
+
+    _onPreviewClose() {
+        const { dispatch } = this.props;
+
+        dispatch(Application.hidePreview());
     }
 
     _onDownloadAll() {
@@ -108,7 +119,7 @@ export default class Root extends Component {
         const { dispatch }  = this.props;
         const { selection } = this.state;
 
-        if (this._isSidebar(ev, "sidebar")) {
+        if (this._isSidebar(ev) || this._isImagePreview(ev)) {
             return;
         }
 
@@ -120,7 +131,7 @@ export default class Root extends Component {
     _mouseDown(ev) {
 
         // Check is sidebar
-        if (this._isSidebar(ev, "sidebar")) {
+        if (this._isSidebar(ev) || this._isImagePreview(ev)) {
             return;
         }
 
@@ -189,6 +200,11 @@ export default class Root extends Component {
         return isOnSidebar;
     }
 
+    _isImagePreview(ev) {
+        const isOnImagePreview = this._checkParentByClass(ev, "image-preview");
+        return isOnImagePreview;
+    }
+
     _checkParentByClass(ev, name) {
         let found = false;
         let path = [];
@@ -215,7 +231,7 @@ export default class Root extends Component {
           ev.pageX - document.body.scrollLeft,
           ev.pageY - document.body.scrollTop
         ];
-    };
+    }
 }
 
 // Styles

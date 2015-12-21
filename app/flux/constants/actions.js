@@ -19,3 +19,6 @@ export const VISIBLE = "VISIBLE";
 export const CAPTURE = "CAPTURE";
 export const SCREEN_CAPTURE = "SCREEN_CAPTURE";
 export const CONVERT = "CONVERT";
+
+export const PREVIEW = "PREVIEW";
+export const HIDE_PREVIEW = "HIDE_PREVIEW";

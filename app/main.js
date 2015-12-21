@@ -4,8 +4,6 @@ import React        from "react";
 import ReactDOM     from "react-dom";
 import { Provider } from "react-redux";
 
-import { DevTools, DebugPanel, LogMonitor } from "redux-devtools/lib/react";
-
 import * as Application from "actions/app";
 
 import Root  from "root";
@@ -26,24 +24,11 @@ Chrome.onMessage(request => {
     store.dispatch(Application.convert(selection, url));
 });
 
-const renderDevTools = isDev => {
-    if (!isDev) {
-        return null;
-    }
-
-    return (
-        <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
-    );
-}
-
 const element = (
     <div>
         <Provider store={store}>
             <Root />
         </Provider>
-        {renderDevTools(false)}
     </div>
 );
 

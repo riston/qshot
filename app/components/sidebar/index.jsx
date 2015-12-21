@@ -2,7 +2,7 @@
 import Radium from "radium";
 import React, { Component, PropTypes } from "react";
 
-import ImageList     from "image-list";
+import ImageList from "image-list";
 
 @Radium
 export default class Sidebar extends Component {
