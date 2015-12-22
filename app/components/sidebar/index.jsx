@@ -20,6 +20,7 @@ export default class Sidebar extends Component {
 
     render() {
         const { isVisible } = this.props;
+        const year = new Date().getFullYear();
 
         return (
             <div className="sidebar"
@@ -40,7 +41,7 @@ export default class Sidebar extends Component {
                 <div style={styles.body}>
                     <ImageList images={this.props.images} />
                 </div>
-                <div style={styles.footer}>Risto Novik &copy; 2015</div>
+                <div style={styles.footer}>Risto Novik &copy; {year}</div>
             </div>
         )
     }

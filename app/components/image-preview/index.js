@@ -88,7 +88,7 @@ const styles = {
         backgroundColor: "#000",
         borderRadius: "50%",
         fontSize: "1.4em",
-        padding: "0.3em",
+        padding: "0.3em 0.4em 0.3em 0.4em",
         color: "#FFF",
         cursor: "pointer",
         border: "none",
