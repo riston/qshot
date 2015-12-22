@@ -28,10 +28,11 @@ export default class ImagePreview extends Component {
                 style={styles.imagePreview}
                 onClick={e => this._onClick(e)}
             >
+                <div style={styles.overlay} />
+                <img style={styles.image} src={url} />
                 <div style={styles.closeWrapper}>
                     <button data-action="close" style={styles.closeButton}>✖</button>
                 </div>
-                <img style={styles.image} src={url} />
             </div>
         )
     }
@@ -49,31 +50,45 @@ export default class ImagePreview extends Component {
 const styles = {
 
     imagePreview: {
+        position: "relative",
+        height: "100%",
+        padding: 0,
+        margin: 0,
+    },
+
+    overlay: {
         position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%,-50%)",
-        backgroundColor: "#006494",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        backgroundColor: "#000",
+        opacity: "0.5",
     },
 
     image: {
-        width: "500px",
-        minWidth: "200px",
-        minHeight: "100px",
-        height: "auto",
+        maxWidth: "70%",
+        maxHeight: "70%",
+        margin: "auto",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        objectFit: "contain",
     },
 
     closeWrapper: {
         position: "absolute",
-        top: "-0.5em",
-        right: "-0.5em",
+        top: "2em",
+        right: "12em",
     },
 
     closeButton: {
-        backgroundColor: "#888",
+        backgroundColor: "#000",
         borderRadius: "50%",
-        fontWeight: "900",
-        padding: "0.5em",
+        fontSize: "1.4em",
+        padding: "0.3em",
         color: "#FFF",
         cursor: "pointer",
         border: "none",
@@ -83,8 +98,4 @@ const styles = {
             backgroundColor: "#F00",
         }
     },
-
-    isHidden: {
-        display: "none",
-    }
 };

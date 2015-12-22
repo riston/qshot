@@ -142,6 +142,9 @@ export default class Root extends Component {
         // Show selection
         dispatch(Application.showSelection());
 
+        // Hide image preview
+        dispatch(Application.hidePreview());
+
         // Hide sidebar for more room
         dispatch(Application.hideSidebar());
     }

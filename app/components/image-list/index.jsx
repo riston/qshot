@@ -58,25 +58,18 @@ export default class ImageList extends Component {
         const { dispatch } = this.props;
         const { id, action } = ev.target.dataset;
 
-        console.log(ev);
-
         switch (action) {
         case "download":
             const { url } = this.props.images[id];
 
-            console.log("Download image", id, action);
-
             dispatch(Application.download(id, url));
-        break
+        break;
 
         case "preview":
-            console.log("Preview image", id);
             dispatch(Application.preview(id));
         break;
 
         case "delete":
-            console.log("Delete image");
-
             dispatch(Application.remove(id));
         break;
         }
