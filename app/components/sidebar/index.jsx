@@ -2,7 +2,8 @@
 import Radium from "radium";
 import React, { Component, PropTypes } from "react";
 
-import ImageList from "image-list";
+import ImageList   from "image-list";
+import ButtonStyle from "styles/button";
 
 @Radium
 export default class Sidebar extends Component {
@@ -25,23 +26,28 @@ export default class Sidebar extends Component {
         return (
             <div className="sidebar"
                 style={[styles.base, isVisible ? styles.isVisible : styles.isHidden]}
+                onClick={e => this._onClick(e)}
             >
-                <div style={styles.header} onClick={e => this._onClick(e)}>
+                <div style={styles.header}>
                     <h2 style={styles.h2}>QShot</h2>
                     <button key="capture"
-                        style={styles.button}
+                        style={ButtonStyle.menuButton}
                         data-action="screen-capture">Screen capture</button>
                     <button key="download-all"
-                        style={styles.button}
+                        style={ButtonStyle.menuButton}
                         data-action="download-all">Download All</button>
-                    <button key="close"
-                        style={styles.button}
-                        data-action="close">Close</button>
                 </div>
                 <div style={styles.body}>
                     <ImageList images={this.props.images} />
                 </div>
-                <div style={styles.footer}>Risto Novik &copy; {year}</div>
+                <div style={styles.footer}>
+                    <button key="close"
+                        style={ButtonStyle.menuButton}
+                        data-action="close">Close</button>
+                    <div style={styles.footerCopy}>
+                        Risto Novik &copy; {year}
+                    </div>
+                </div>
             </div>
         )
     }
@@ -86,8 +92,11 @@ const styles = {
         backgroundColor: "rgb(0, 100, 148)",
         padding: "0.5em",
         color: "#E8F1F2",
-        fontSize: "0.7em",
         fontWeight: 900,
+    },
+
+    footerCopy: {
+        fontSize: "0.7em",
         textAlign: "center",
         fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
     },
@@ -99,24 +108,6 @@ const styles = {
         color: "#E8F1F2",
         fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
         textAlign: "center",
-    },
-
-    button: {
-        cursor: "pointer",
-        fontSize: "1em",
-        fontWeight: "600",
-        width: "100%",
-        padding: "0.2em",
-        outline: "none",
-        border: "none",
-        borderRadius: "3px",
-        backgroundColor: "#E84855",
-        color: "#FFF",
-        marginBottom: "0.5em",
-
-        ":hover": {
-            backgroundColor: "#E84800",
-        }
     },
 
     body: {
