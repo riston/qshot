@@ -6,16 +6,18 @@ const gutil   = require("gulp-util");
 const webpack = require("webpack");
 const zip     = require("gulp-zip");
 
-const webpackBuild = config => {
+const webpackBuild = (config, cb) => {
 
-    webpack(config, (err, stats) => {
+    return webpack(config, (err, stats) => {
         if (err) {
-            throw new gutil.PluginError("webpack", err);
+            return cb(new gutil.PluginError("webpack", err));
         }
 
         gutil.log("[webpack]", stats.toString({
             colors: true
         }));
+
+        return cb(null);
     });
 }
 
@@ -23,7 +25,7 @@ gulp.task("zip", () => {
     const manifest = require("./extension/manifest.json");
     const version = manifest.version;
 
-    gulp.src("build/*")
+    return gulp.src("build/*")
         .pipe(zip(`qshot-${version}.zip`))
         .pipe(gulp.dest("dist"));
 });
@@ -31,22 +33,24 @@ gulp.task("zip", () => {
 gulp.task("copy", () => {
 
      // Copy files
-    gulp.src("./extension/**")
+    return gulp.src("./extension/**")
         .pipe(gulp.dest("build"));
 });
 
-gulp.task("webpack:prod", () => {
+gulp.task("webpack:prod", (done) => {
     const config = require("./webpack/prod.config.js");
-    webpackBuild(config);
+
+    return webpackBuild(config, done);
 });
 
 gulp.task("webpack:dev", () => {
     const config = require("./webpack/dev.config.js");
-    webpackBuild(config);
+
+    return webpackBuild(config, done);
 });
 
 gulp.task("build:dev", () => {
-    gulp.watch(["app/**/*", "extension"], ["webpack:dev", "copy"]);
+    return gulp.watch(["app/**/*", "extension"], ["webpack:dev", "copy"]);
 });
 
 gulp.task("build:prod", ["webpack:prod", "copy", "zip"]);

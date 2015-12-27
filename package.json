@@ -1,7 +1,7 @@
 {
   "name": "qshot",
   "private": true,
-  "version": "0.1.1",
+  "version": "1.2.0",
   "description": "Quick way to capture areas in browser",
   "scripts": {
     "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --config webpack/dev.config.js",
