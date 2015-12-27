@@ -44,7 +44,7 @@ export const zip = images => {
     );
 
     // Add readme file
-    archive.file("readme.txt", "Created with QuickShot");
+    archive.file("readme.txt", "Created with QShot");
     images.forEach(image => {
         const name = `${image.id}.png`;
         const options = { base64: true };

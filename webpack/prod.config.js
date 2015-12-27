@@ -25,7 +25,7 @@ module.exports = {
             loader: "babel?optional[]=runtime&stage=0",
             exclude: /node_modules/
         }, {
-            test: /\.png.*$/,
+            test: /\.(png|svg)$/,
             loaders: ["url-loader?limit=100000&mimetype=image/png"],
             exclude: /node_modules/
         }, {
